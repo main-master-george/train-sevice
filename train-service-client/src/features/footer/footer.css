@@ -1,0 +1,40 @@
+.footer {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    align-items: center;
+    background-color: #1fff00;
+    max-height: 250px;
+}
+
+.qr {
+    max-width: 250px;
+    max-height: 250px;
+}
+
+.info {
+    margin-left: 16px;
+    margin-bottom: 16px;
+}
+
+@media (max-width: 768px) {
+    .qr {
+        max-width: 200px;
+        max-height: 200px;
+    }
+}
+
+@media (max-width: 576px) {
+    .footer {
+        grid-template-columns: 1fr;
+        max-height: 266px;
+    }
+
+    .info {
+        margin-left: 0;
+    }
+
+    .qr {
+        max-width: 150px;
+        max-height: 150px;
+    }
+}
