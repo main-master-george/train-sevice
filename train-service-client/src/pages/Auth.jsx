@@ -13,6 +13,26 @@ const Auth = () => {
     const [code, setCode] = useState("");
     const [showCodeInput, setShowCodeInput] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
+    const [passwordError, setPasswordError] = useState("");
+
+    const isPasswordValid = (password) => {
+        const lengthCheck = password.length >= 8;
+        const upperCaseCheck = /[A-Z]/.test(password);
+        const lowerCaseCheck = /[a-z]/.test(password);
+        const digitCheck = /\d/.test(password);
+        const specialCharCheck = /[!*@#$%^&]/.test(password);
+        return lengthCheck && upperCaseCheck && lowerCaseCheck && digitCheck && specialCharCheck;
+    };
+
+    const handlePasswordChange = (e) => {
+        const newPassword = e.target.value;
+        setPassword(newPassword);
+        if (!isPasswordValid(newPassword)) {
+            setPasswordError("Пароль должен содержать минимум 8 символов, включая заглавные и строчные латинские буквы, хотя бы одну цифру и один спецсимвол (!*@#$%^&)");
+        } else {
+            setPasswordError("");
+        }
+    };
 
     const navigate = useNavigate();
 
@@ -41,10 +61,6 @@ const Auth = () => {
 
         const result = await confirmEmail(email);
         setIsLoading(false);
-
-        if (!result.success) {
-            alert(result.message);
-        }
     };
 
     const handleLogin = async (e) => {
@@ -86,7 +102,16 @@ const Auth = () => {
                     </Form.Group>
                     <Form.Group controlId="password" className="mt-3">
                         <Form.Label>Пароль</Form.Label>
-                        <Form.Control type="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
+                        <Form.Control
+                            type="password"
+                            value={password}
+                            onChange={handlePasswordChange}
+                            isInvalid={!!passwordError}
+                            required
+                        />
+                        <Form.Control.Feedback type="invalid">
+                            {passwordError}
+                        </Form.Control.Feedback>
                     </Form.Group>
                     {isRegister && showCodeInput && (
                         <Form.Group controlId="code" className="mt-3">
@@ -94,7 +119,7 @@ const Auth = () => {
                             <Form.Control type="text" value={code} onChange={(e) => setCode(e.target.value)} required />
                         </Form.Group>
                     )}
-                    <Button variant="primary" type="submit" className="mt-3 w-100" disabled={isLoading}>
+                    <Button variant="primary" type="submit" className="mt-3 w-100" disabled={isLoading || (isRegister && showCodeInput && !!passwordError)}>
                         {isLoading ? (
                             <>
                                 <Spinner animation="border" size="sm" role="status" className="me-2" />

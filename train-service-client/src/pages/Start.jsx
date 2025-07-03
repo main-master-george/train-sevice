@@ -13,6 +13,16 @@ const Start = () => {
 
     return (
         <div>
+            <div style={{
+                backgroundColor: '#fff3cd',
+                color: '#856404',
+                padding: '16px',
+                textAlign: 'center',
+                borderBottom: '1px solid #ffeeba'
+            }}>
+                <strong>Внимание!</strong> Сайт находится в разработке. Регистрация является временной, и после завершения разработки все данные пользователей, зарегистрированных в пробный период, будут удалены. Курсы на текущий момент являются демонстрационными и могут быть изменены.
+            </div>
+
             <Header onButtonClick={auth} />
             <Main />
             <Footer />

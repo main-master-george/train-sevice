@@ -72,4 +72,4 @@
 
 ## Информация о статусе сервиса
 
-сервис доступен по адресу:
+сервис доступен по адресу: [programming-education-service](programming-education-service.ru)
